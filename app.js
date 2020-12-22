@@ -5,6 +5,7 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
+const passport = require('koa-passport')
 // const koaBody = require('koa-body');
 const routing = require('./routes/index');
 const formatResponse = require('./middlewares/formatResponse')
@@ -28,6 +29,12 @@ app.use(logger())
 
 app.use(require('koa-static')(__dirname + '/public'))
 
+
+// 初始化koa-passport
+app.use(passport.initialize())
+app.use(passport.session())
+// koa-passport的配置文件
+require('./config/passport')(passport)
 
 // 文件上传
 /*app.use(koaBody({
