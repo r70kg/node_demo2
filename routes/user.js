@@ -12,21 +12,10 @@ router.prefix('/user')
 router.post('/register',userController.register);
 // 登陆
 router.post('/login',userController.login);
-
-router.get('/test',userController.test);
-
-
-
-
-
-
-
-
-
-
-
-
-
+// 刷新token
+router.post('/refreshtoken',userController.refreshtoken);
+// 获取用户信息
+router.post('/userInfo',userController.userInfo);
 
 
 

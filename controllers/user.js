@@ -6,8 +6,8 @@ const jwt = require('jsonwebtoken');
 const tkconf = require('../token/config');
 // 创建token
 const addtoken = require('../token/addtoken');
-// 验证token
-const proving = require('../token/proving');
+// 解密token
+const decodetoken = require('../token/decodetoken');
 
 
 
@@ -63,22 +63,19 @@ class userController {
         const {username, password} = ctx.request.body;
         if(username&&password){
             // 用户是否已存在
-            const res = await userModal.find({
+            const res = await userModal.findUserName({
                 username
             });
-
-
             if (res.length) {
-
-
                 console.log(tkconf.secret)
-
+                let {userId} = res[0]
                 // 创建 token 和 refresh_token
-                const access_token = addtoken(res[0],tkconf.secret,tkconf.tokenLife);
-                // const refresh_token = jwt.sign(res[0], tkconf.refreshTokenSecret,tkconf.refreshTokenLife);
-
+                const access_token = addtoken(userId,tkconf.secret,tkconf.tokenLife);
+                const refresh_token = addtoken(userId, tkconf.refreshTokenSecret,tkconf.refreshTokenLife);
                 ctx.success({
-                    access_token
+                    access_token,
+                    refresh_token,
+                    userInfo:res[0]
                 });
             }else {
                 ctx.fail('用户名或密码错误',-1);
@@ -86,34 +83,34 @@ class userController {
         }else{
             ctx.fail('用户名或者密码不能为空',-1);
         }
+    }
+    // 用户信息
+    async userInfo(ctx){
+        const {userId} = ctx.request.body;
+        const res = await userModal.findUserInfo({
+            userId
+        });
 
+        if (res.length) {
+            ctx.success({
+                userInfo:res[0]
+            });
+        }else {
+            ctx.fail('用户名或密码错误',-1);
+        }
 
     }
-
-    async test(ctx){
-        let token = ctx.request.header.authorization;
-
-
-        console.log(token)
-        if (token){
-            //  获取到token
-            let res = proving(token);
-            if (res && res.exp <= new Date()/1000){
-                ctx.body = {
-                    message: 'token过期',
-                    code:3
-                };
-            } else {
-                ctx.body = {
-                    message: '解析成功',
-                    code:1
-                }
-            }
-        } else{  // 没有取到token
-            ctx.body = {
-                msg:'没有token',
-                code:0
-            }
+    // 刷新 refreshtoken
+    async refreshtoken(ctx){
+        const {refreshToken} = ctx.request.body;
+        if(refreshToken){
+            let {userId} = decodetoken(refreshToken)
+            const access_token = addtoken(userId,tkconf.secret,tkconf.tokenLife);
+            const refresh_token = addtoken(userId,tkconf.refreshTokenSecret,tkconf.refreshTokenLife);
+            ctx.success({
+                access_token,
+                refresh_token
+            });
         }
     }
 }

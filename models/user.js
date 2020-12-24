@@ -8,9 +8,17 @@ const {
 
 class userModal{
     // 查询用户名
-    async find({username}){
+    async findUserName({username}){
 
         let _sql = `select * from table_user WHERE username= '${username}'`
+
+        return await findData(_sql);
+    }
+
+    // 查询用户信息
+    async findUserInfo({userId}){
+
+        let _sql = `select * from table_user WHERE userId= '${userId}'`
 
         return await findData(_sql);
     }

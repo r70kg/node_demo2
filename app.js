@@ -10,9 +10,11 @@ const passport = require('koa-passport')
 const routing = require('./routes/index');
 const formatResponse = require('./middlewares/formatResponse')
 
+//路由权限控制
+const koaJwt = require('koa-jwt')
 
 app.use(views(__dirname + '/views', {
-  extension: 'pug'
+    extension: 'pug'
 }))
 
 // error handler
@@ -28,6 +30,15 @@ app.use(json())
 app.use(logger())
 
 app.use(require('koa-static')(__dirname + '/public'))
+
+
+// token验证 及 无需验证的路由
+app.use(koaJwt({secret:'token'}).unless({
+  path:[
+      /^\/user\/login/,
+      /^\/user\/register/,
+  ]
+}))
 
 
 // 初始化koa-passport
