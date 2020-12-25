@@ -9,6 +9,7 @@ const passport = require('koa-passport')
 // const koaBody = require('koa-body');
 const routing = require('./routes/index');
 const formatResponse = require('./middlewares/formatResponse')
+const Exception = require('./middlewares/Exception')
 
 //路由权限控制
 const koaJwt = require('koa-jwt')
@@ -19,6 +20,33 @@ app.use(views(__dirname + '/views', {
 
 // error handler
 onerror(app)
+
+
+/* app.use((ctx, next) => {
+    return next().catch((err) => {
+      
+      if (err.status === 401) {
+        ctx.status = 401;
+        ctx.body = {
+          error: err.originalError ? err.originalError.message : err.message,
+          
+        };
+      } else {
+        throw err;
+      }
+    })}) */
+
+// 统一处理结果中间件
+app.use(formatResponse())
+app.use(Exception)
+
+
+
+
+
+
+
+
 
 // middlewares
 app.use(bodyparser({
@@ -33,12 +61,19 @@ app.use(require('koa-static')(__dirname + '/public'))
 
 
 // token验证 及 无需验证的路由
-app.use(koaJwt({secret:'token'}).unless({
+// 可以使用另外一ctx key来表示解码数据，然后就可以通过ctx.state.jwtdata代替\
+// ctx.state.user获得解码数据
+// key: 'jwtdata'
+app.use(koaJwt({secret:'token', key: 'jwtdata'},).unless({
   path:[
       /^\/user\/login/,
       /^\/user\/register/,
+      /^\/user\/refreshtoken/
   ]
 }))
+
+
+
 
 
 // 初始化koa-passport
@@ -66,8 +101,7 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
-// 统一处理结果中间件
-app.use(formatResponse())
+
 
 // error-handling
 app.on('error', (err, ctx) => {
