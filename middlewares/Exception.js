@@ -7,10 +7,17 @@ const { HttpExceptions } = require('../core/http-exceptions')
 const Exception = async (ctx, next) => {
     try {
         await next()
-    } catch(error) {
-        const { msg, errorCode, code } = error
-        const url = `${ctx.method} : ${ctx.request.path}`
-        if (error instanceof HttpExceptions) {
+    } catch (err) {
+        const { message, status } = err
+
+        // 拦截 401 
+        if (status === 401) {
+            let _msg = err.originalError ? err.originalError.message : err.message
+            ctx.fail(_msg,401)
+
+        } else {
+            /* const url = `${ctx.method} : ${ctx.request.path}`
+        if (err instanceof HttpExceptions) {
             // 已知异常
             ctx.body = { msg, errorCode, url }
             ctx.status = code
@@ -18,7 +25,12 @@ const Exception = async (ctx, next) => {
             // 未知异常
             ctx.body = { msg: '服务器内部错误~', errorCode: 999, url }
             ctx.status = 500
+        } */
         }
+
+
+
+
     }
 }
 
