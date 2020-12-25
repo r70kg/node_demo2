@@ -96,7 +96,7 @@ class userController {
                 userInfo:res[0]
             });
         }else {
-            ctx.fail('用户名或密码错误',-1);
+            ctx.fail('错误',-1);
         }
 
     }
