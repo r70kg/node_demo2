@@ -10,7 +10,7 @@ class userModal{
     // 查询用户名
     async findUserName({username}){
 
-        let _sql = `SELECT username,userId,sex from table_user WHERE username= '${username}'`
+        let _sql = `SELECT username,userId,password,sex from table_user WHERE username= '${username}'`
 
         return await findData(_sql);
     }
