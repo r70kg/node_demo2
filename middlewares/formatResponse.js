@@ -18,16 +18,16 @@
  */
 
 
-const formatResponse =  (option = {}) => {
+const formatResponse = (option = {}) => {
     return async (ctx, next) => {
 
         console.log(ctx)
 
-        ctx.success = (data, type) => {
+        ctx.success = (data = {}, successMsg, code, type = 'json') => {
             ctx.type = type || option.type || 'json'
             ctx.body = {
-                code: option.successCode || 200,
-                msg: option.successMsg || '调用成功',
+                code: option.successCode || code || 1,
+                msg: option.successMsg || successMsg || '调用成功',
                 data
             }
         }
@@ -37,7 +37,7 @@ const formatResponse =  (option = {}) => {
         ctx.fail = (msg, code) => {
             ctx.type = option.type || 'json'
             ctx.body = {
-                code: option.failCode || code || 500,
+                code: option.failCode || code || 0,
                 msg: msg || option.failMsg || '调用失败'
             }
         }
@@ -53,4 +53,3 @@ module.exports = formatResponse;
 
 
 
- 
