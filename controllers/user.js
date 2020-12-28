@@ -10,13 +10,12 @@ const addtoken = require('../token/addtoken');
 const decodetoken = require('../token/decodetoken');
 
 
-
 class userController {
     // 注册
     async register(ctx) {
 
 
-        const { username, password } = ctx.request.body;
+        const {username, password} = ctx.request.body;
 
         if (username && password) {
 
@@ -27,7 +26,7 @@ class userController {
                 });
 
                 if (query.length) {
-                    ctx.success({},'用户已存在')
+                    ctx.success({}, '用户已存在')
 
                 } else {
 
@@ -40,13 +39,13 @@ class userController {
                         userInfo: {
                             username: username
                         }
-                    },'注册成功')
+                    }, '注册成功')
                 }
 
             } catch (err) {
                 ctx.fail('服务器错误');
             }
-        }else{
+        } else {
             ctx.fail('不能为空');
         }
 
@@ -54,7 +53,7 @@ class userController {
 
     // 登陆
     async login(ctx) {
-        const { username, password } = ctx.request.body;
+        const {username, password} = ctx.request.body;
         if (username && password) {
             let pwd = password
             // 用户是否已存在
@@ -62,7 +61,7 @@ class userController {
                 username
             });
             if (res.length) {
-                let { userId, password } = res[0];
+                let {userId, password} = res[0];
                 if (pwd == password) {
                     // 创建 token 和 refresh_token
                     const access_token = addtoken(userId, tkconf.secret, tkconf.tokenLife);
@@ -71,8 +70,8 @@ class userController {
                         access_token,
                         refresh_token,
                         userInfo: res[0]
-                    },'登录成功');
-                }else{
+                    }, '登录成功');
+                } else {
                     ctx.fail('用户名或密码错误');
                 }
 
@@ -83,9 +82,10 @@ class userController {
             ctx.fail('用户名或者密码不能为空');
         }
     }
+
     // 用户信息
     async userInfo(ctx) {
-        const { userId } = ctx.request.body;
+        const {userId} = ctx.request.body;
         const res = await userModal.findUserInfo({
             userId
         });
@@ -99,11 +99,12 @@ class userController {
         }
 
     }
+
     // 刷新 refreshtoken
     async refreshtoken(ctx) {
-        const { refreshToken } = ctx.request.body;
+        const {refreshToken} = ctx.request.body;
         if (refreshToken) {
-            let { userId } = decodetoken(refreshToken)
+            let {userId} = decodetoken(refreshToken)
             const access_token = addtoken(userId, tkconf.secret, tkconf.tokenLife);
             const refresh_token = addtoken(userId, tkconf.refreshTokenSecret, tkconf.refreshTokenLife);
             ctx.success({
@@ -111,6 +112,53 @@ class userController {
                 refresh_token
             });
         }
+    }
+
+    // 修改密码
+    async updatePassword(ctx) {
+        let {username, oldPassword, newPassword, aginPassword} = ctx.body;
+
+
+        // 判空
+        let _arr = [{
+            key: username,
+            tip: '用户名不能为空'
+        }, {
+            key: oldPassword,
+            tip: '原密码不能为空'
+        }, {
+            key: newPassword,
+            tip: '新密码不能为空'
+        }, {
+            key: aginPassword,
+            tip: '二次确认密码不能为空'
+        }];
+
+        _arr.forEach(({key, tip}) => {
+            if (!key) {
+                ctx.fail(0, tip);
+            }
+        })
+
+        if (aginPassword !== newPassword) {
+            ctx.fail(0, '两次新密码不一致');
+        }
+
+
+        // 判断用户是否存在
+        const _res = await userModal.findUserName({
+            username
+        });
+
+        if(_res.length){
+            const data = await userModal.reg({
+                username: username,
+                password: password
+            });
+        }
+
+
+
     }
 }
 

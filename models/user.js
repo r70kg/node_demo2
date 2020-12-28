@@ -32,6 +32,11 @@ class userModal{
 
         return await  addData(_sql,_params)
     }
+    // 更新密码
+    async updatePassword(_params){
+        let _sql = `update user set ? where username=?`;
+        return await  exitData(_sql,_params)
+    }
 }
 
 

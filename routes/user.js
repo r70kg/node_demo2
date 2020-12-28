@@ -16,6 +16,8 @@ router.post('/login',userController.login);
 router.post('/refreshtoken',userController.refreshtoken);
 // 获取用户信息
 router.post('/userInfo',userController.userInfo);
+// 修改密码
+router.post('/updatePassword',userController.updatePassword);
 
 
 
