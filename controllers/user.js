@@ -116,7 +116,7 @@ class userController {
 
     // 修改密码
     async updatePassword(ctx) {
-        let {username, oldPassword, newPassword, aginPassword} = ctx.body;
+        let {username, oldPassword, newPassword, aginPassword} = ctx.request.body;
 
 
         // 判空
@@ -134,29 +134,48 @@ class userController {
             tip: '二次确认密码不能为空'
         }];
 
-        _arr.forEach(({key, tip}) => {
-            if (!key) {
-                ctx.fail(0, tip);
+
+        function isEmpty(_arr) {
+            let flag = true;
+            for (var i = 0; i < _arr.length; i++) {
+                if (!_arr[i].key) {
+                    flag = false;
+                    ctx.fail(_arr[i].tip);
+                    break;
+                }
             }
-        })
 
-        if (aginPassword !== newPassword) {
-            ctx.fail(0, '两次新密码不一致');
+            if (flag) {
+                if (aginPassword !== newPassword) {
+                    ctx.fail('两次新密码不一致');
+                    flag = false;
+                }
+            }
+            return flag;
         }
+        isEmpty(_arr, newPassword, newPassword)
 
 
-        // 判断用户是否存在
-        const _res = await userModal.findUserName({
-            username
-        });
-
-        if(_res.length){
-            const data = await userModal.reg({
-                username: username,
-                password: password
+        if (isEmpty(_arr, newPassword, newPassword)) {
+            // 判断用户是否存在
+            const _res = await userModal.findUserName({
+                username
             });
-        }
 
+
+            console.log(999999999999)
+
+            if (_res.length) {
+                await userModal.updatePassword({
+                    username: username,
+                    password: newPassword
+                });
+
+                ctx.success({}, '修改成功');
+            } else {
+                ctx.fail('服务器错误');
+            }
+        }
 
 
     }

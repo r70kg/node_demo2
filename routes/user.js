@@ -25,5 +25,4 @@ router.post('/updatePassword',userController.updatePassword);
 
 
 
-
 module.exports = router

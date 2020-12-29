@@ -6,9 +6,9 @@ const {
 } = require('../db/mysql');
 
 
-class userModal{
+class userModal {
     // 查询用户名
-    async findUserName({username}){
+    async findUserName({username}) {
 
         let _sql = `SELECT username,userId,password,sex from table_user WHERE username= '${username}'`
 
@@ -16,7 +16,7 @@ class userModal{
     }
 
     // 查询用户信息
-    async findUserInfo({userId}){
+    async findUserInfo({userId}) {
 
         let _sql = `SELECT userId from table_user WHERE userId= '${userId}'`
 
@@ -24,21 +24,23 @@ class userModal{
     }
 
     // 注册用户
-    async reg(_params){
+    async reg(_params) {
 
         // let _sql = `INSERT INTO table_user (username,password) VALUES ('${username}','${password}')`
 
         let _sql = `INSERT INTO table_user SET ?`;
 
-        return await  addData(_sql,_params)
+        return await addData(_sql, _params)
     }
+
     // 更新密码
-    async updatePassword(_params){
-        let _sql = `update user set ? where username=?`;
-        return await  exitData(_sql,_params)
+    async updatePassword(_params) {
+
+        _params = [{password: _params.password},_params.username]
+        let _sql = `update table_user set ? where username=?`;
+        return await exitData(_sql, _params)
     }
 }
-
 
 
 export default new userModal
