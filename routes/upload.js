@@ -1,6 +1,6 @@
 const router = require('koa-router')()
-const fs = require('fs')
-const path = require('path')
+import fs from 'fs';
+import path from 'path';
 
 router.prefix('/upload')
 
@@ -30,4 +30,4 @@ router.post('/uploadfiles', async (ctx, next) => {
     })
 })
 
-module.exports = router
+module.exports = router;

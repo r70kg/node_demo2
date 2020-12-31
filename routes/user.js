@@ -1,5 +1,4 @@
 const router = require('koa-router')()
-const {ResourceErr} = require('../core/http-exceptions')
 
 import userController from '../controllers/user';
 router.prefix('/user')
@@ -20,9 +19,4 @@ router.post('/userInfo',userController.userInfo);
 router.post('/updatePassword',userController.updatePassword);
 
 
-
-
-
-
-
-module.exports = router
+module.exports = router;

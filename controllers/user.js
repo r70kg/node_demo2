@@ -1,13 +1,13 @@
 import userModal from '../models/user';
 
 // token配置
-const tkconf = require('../token/config');
-// 创建token
-const addtoken = require('../token/addtoken');
-// 解密token
-const decodetoken = require('../token/decodetoken');
+import tkconf from '../token/config';
+// 创建 token
+import addtoken from '../token/addtoken';
+// 解密 token
+import decodetoken from '../token/decodetoken';
 // 验证 refreshToken
-const verify_refreshToken = require('../token/verify');
+import verify_refreshToken from '../token/verify';
 
 
 class userController {
@@ -121,7 +121,6 @@ class userController {
     // 修改密码
     async updatePassword(ctx) {
         let {username, oldPassword, newPassword, aginPassword} = ctx.request.body;
-
 
         // 判空
         let _arr = [{

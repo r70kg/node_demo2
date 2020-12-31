@@ -1,10 +1,10 @@
 /**
  * Created by Administrator on 2020/12/23.
  */
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
 //解密token并导出
-module.exports = (token) => {
+export default (token) => {
     const decoded = jwt.decode(token);
     return decoded;
 };

@@ -1,9 +1,10 @@
-const {
+
+import {
     findData,
     addData,
     deleData,
     exitData
-} = require('../db/mysql');
+} from '../db/mysql';
 
 
 class userModal {

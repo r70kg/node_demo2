@@ -25,4 +25,5 @@ var config = {
         //redis数据库配置
     },
 };
+
 module.exports = config;

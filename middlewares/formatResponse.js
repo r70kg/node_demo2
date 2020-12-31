@@ -44,7 +44,7 @@ const formatResponse = (option = {}) => {
         await next()
     }
 }
-module.exports = formatResponse;
+export default formatResponse;
 
 
 

@@ -4,13 +4,11 @@
 
 
 const router = require('koa-router')()
-const {ResourceErr} = require('../core/http-exceptions')
-const {wantFindData} = require('../db/processData')
 
 router.prefix('/ws')
 
+import ws from 'nodejs-websocket';
 
-var ws = require("nodejs-websocket");
 console.log("开始建立连接...")
 
 var server = ws.createServer(function (conn) {
@@ -21,6 +19,7 @@ var server = ws.createServer(function (conn) {
         sendMess();
 
         function sendMess() {
+
             let data = [["2000-06-05",Math.random()*40+10],["2015-02-23",Math.random()*40+10],["2015-02-24",Math.random()*40+10]]
 
             conn.send(JSON.stringify(data));
@@ -33,8 +32,8 @@ var server = ws.createServer(function (conn) {
     conn.on("error", function (code, reason) {
         console.log("异常关闭")
     });
-}).listen(8001)
+}).listen(8002)
 console.log("WebSocket建立完毕")
 
 
-module.exports = router
+module.exports = router;

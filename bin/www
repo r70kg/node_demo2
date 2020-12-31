@@ -4,10 +4,13 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+import app from '../app';
+import http from 'http';
+
 var debug = require('debug')('demo:server');
-var http = require('http');
+
 var config = require('../config/index');
+
 // 环境配置
 // let dotenv = require('dotenv');
 // dotenv.config('../env');

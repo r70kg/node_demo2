@@ -1,14 +1,19 @@
 /**
- * Created by Administrator on 2020/12/22.
+ * Created by Administrator on 2020/12/22
+ *
+ * @secret: token 密匙
+ * @refreshTokenSecret: refreshToken 密匙
+ * @tokenLife: token 有效期 单位 s     10 min
+ * @refreshTokenLife: refreshToken 有效期 单位 s   1h
  */
+
 let conf = {
     "secret": "token",
-    "refreshTokenSecret": "some-secret-refresh-token-shit",
-    "port": 3000,
-    "tokenLife": 60 * 10, //  10 min
-    "refreshTokenLife": 60 * 60 * 2 // 2h
+    "refreshTokenSecret": "refreshToken",
+    "tokenLife": 60*10,
+    "refreshTokenLife": 60*60*1
 }
 
-module.exports = conf;
+export default conf;
 
 

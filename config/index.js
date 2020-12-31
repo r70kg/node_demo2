@@ -1,4 +1,4 @@
-var path = require('path')
+import path from 'path';
 
 console.log(`运行环境${process.env.NODE_ENV}`)
 
@@ -15,4 +15,4 @@ try{
     throw err;
 }
 
-module.exports = config
+module.exports = config;
