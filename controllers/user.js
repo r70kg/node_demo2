@@ -1,13 +1,13 @@
 import userModal from '../models/user';
 
-const jwt = require('jsonwebtoken');
-
 // token配置
 const tkconf = require('../token/config');
 // 创建token
 const addtoken = require('../token/addtoken');
 // 解密token
 const decodetoken = require('../token/decodetoken');
+// 验证 refreshToken
+const verify_refreshToken = require('../token/verify');
 
 
 class userController {
@@ -103,7 +103,9 @@ class userController {
     // 刷新 refreshtoken
     async refreshtoken(ctx) {
         const {refreshToken} = ctx.request.body;
-        if (refreshToken) {
+        // 验证 refreshToken 1:通过
+        let _res = verify_refreshToken(refreshToken)
+        if(_res===1){
             let {userId} = decodetoken(refreshToken)
             const access_token = addtoken(userId, tkconf.secret, tkconf.tokenLife);
             const refresh_token = addtoken(userId, tkconf.refreshTokenSecret, tkconf.refreshTokenLife);
@@ -111,6 +113,8 @@ class userController {
                 access_token,
                 refresh_token
             });
+        }else{
+            ctx.fail(_res.message,401);
         }
     }
 
