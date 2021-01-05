@@ -114,7 +114,7 @@ class userController {
                 refresh_token
             });
         }else{
-            ctx.fail(_res.message,401);
+            ctx.fail(_res.message,4001);
         }
     }
 
