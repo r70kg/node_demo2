@@ -11,6 +11,7 @@ router.prefix('/user')
 router.post('/register',userController.register);
 // 登陆
 router.post('/login',userController.login);
+router.post('/wxlogin',userController.wxlogin);
 // 刷新token
 router.post('/refreshtoken',userController.refreshtoken);
 // 获取用户信息
