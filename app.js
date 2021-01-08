@@ -60,6 +60,7 @@ app.use(require('koa-static')(__dirname + '/public'))
 app.use(koaJwt({secret:'token', key: 'jwtdata'},).unless({
   path:[
       /^\/user\/login/,
+      /^\/user\/wxlogin/,
       /^\/user\/register/,
       /^\/user\/refreshtoken/
   ]

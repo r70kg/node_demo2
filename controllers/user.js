@@ -1,6 +1,8 @@
 import koa2Req from 'koa2-request';
 import userModal from '../models/user';
 
+// import redisClient from '../db/redis';
+
 // token配置
 import tkconf from '../token/config';
 // 创建 token
@@ -9,6 +11,7 @@ import addtoken from '../token/addtoken';
 import decodetoken from '../token/decodetoken';
 // 验证 refreshToken
 import verify_refreshToken from '../token/verify';
+
 
 
 class userController {
@@ -90,11 +93,16 @@ class userController {
         // 接收appid,appsecret,code
         const {APPID,SECRET,JSCODE} = ctx.request.body;
 
+
+
         // 组合url
         let _url = 'https://api.weixin.qq.com/sns/jscode2session?appid='+APPID+'&secret='+SECRET+'&js_code='+JSCODE+'&grant_type=authorization_code';
 
         // 向微信服务器发送请求
         let res = await koa2Req(_url);
+
+
+        
 
         // 获取session_key和openid
         const {session_key,openid} = JSON.parse(res.body);
@@ -103,12 +111,18 @@ class userController {
         const _3rd_session = `${Date.now()}+${Math.random()}`;
 
         // 存入Redis并设置过期时间
-        const result = await redisClient.set(_3rd_session,JSON.stringify({session_key:session_key,openid:openid}));
+
+        console.log('------------------111--------------')
+
+        ctx.success({session_key:session_key,openid:openid})
+
+
+        /*const result = await redisClient.set(_3rd_session,JSON.stringify({session_key:session_key,openid:openid}));
         await redisClient.expire(_3rd_session,REDIS_EXPIRES);
         // 返回_3rd_session
         if(result){
             ctx.body = _3rd_session
-        }
+        }*/
     }
 
     // 用户信息
