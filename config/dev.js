@@ -11,9 +11,9 @@ var config = {
     port: 3001, //服务端口号
     mysql_config: {
         //mysql数据库配置
-        host: 'localhost',
+        host: '36r9930w92.qicp.vip',
         user: 'root',
-        port: '3306',
+        port: '48052',
         database: 'ifsm',
         password: 'aaaa24685',
         connectionLimit: 50 // 最大连接数

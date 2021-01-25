@@ -14,6 +14,7 @@ import Exception from './middlewares/Exception';
 import routing from './routes/index';
 
 
+
 const app = new Koa()
 // const koaBody = require('koa-body');
 
@@ -62,7 +63,9 @@ app.use(koaJwt({secret:'token', key: 'jwtdata'},).unless({
       /^\/user\/login/,
       /^\/user\/wxlogin/,
       /^\/user\/register/,
-      /^\/user\/refreshtoken/
+      /^\/user\/refreshtoken/,
+      /^\/user\/refreshtoken/,
+      /^\/wx\/wechat\/verify/
   ]
 }))
 

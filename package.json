@@ -5,7 +5,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=dev nodemon --harmony bin/www server --exec babel-node",
     "dev": "cross-env NODE_ENV=dev ./node_modules/.bin/nodemon --harmony bin/www server --exec babel-node",
-    "prod": "cross-env NODE_ENV=prod pm2 start bin/www",
+    "prod": "cross-env NODE_ENV=prod pm2 start bin/www --node-args='--harmony'",
     "test": "cross-env NODE_ENV=test echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

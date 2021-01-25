@@ -116,7 +116,6 @@ class userController {
 
         ctx.success({session_key:session_key,openid:openid})
 
-
         /*const result = await redisClient.set(_3rd_session,JSON.stringify({session_key:session_key,openid:openid}));
         await redisClient.expire(_3rd_session,REDIS_EXPIRES);
         // 返回_3rd_session
