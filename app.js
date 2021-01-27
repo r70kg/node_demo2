@@ -58,7 +58,7 @@ app.use(require('koa-static')(__dirname + '/public'))
 // token验证 及 无需验证的路由
 // 可以使用另外一ctx key来表示解码数据，然后就可以通过ctx.state.jwtdata代替
 // ctx.state.user获得解码数据
-app.use(koaJwt({secret:'token', key: 'jwtdata'},).unless({
+/* app.use(koaJwt({secret:'token', key: 'jwtdata'},).unless({
   path:[
       /^\/user\/login/,
       /^\/user\/wxlogin/,
@@ -67,7 +67,7 @@ app.use(koaJwt({secret:'token', key: 'jwtdata'},).unless({
       /^\/user\/refreshtoken/,
       /^\/wx\/wechat\/verify/
   ]
-}))
+})) */
 
 
 // 文件上传

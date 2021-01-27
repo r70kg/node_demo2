@@ -24,6 +24,9 @@ var config = {
     redis_config: {
         //redis数据库配置
     },
+    wx:{
+        appId:'wx815629929dadc0fd'
+    }
 };
 
 module.exports = config;

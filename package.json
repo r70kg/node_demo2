@@ -28,6 +28,7 @@
     "koa-static": "^5.0.0",
     "koa-views": "^6.2.0",
     "koa2-request": "^1.0.4",
+    "memory-cache": "^0.2.0",
     "mysql": "^2.18.1",
     "nodejs-websocket": "^1.7.2",
     "nodemon": "^2.0.6",
