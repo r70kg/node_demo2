@@ -11,9 +11,9 @@ var config = {
     port: 3001, //服务端口号
     mysql_config: {
         //mysql数据库配置
-        host: '36r9930w92.qicp.vip',
+        host: '192.168.8.169',
         user: 'root',
-        port: '48052',
+        port: '3306',
         database: 'ifsm',
         password: 'aaaa24685',
         connectionLimit: 50 // 最大连接数
@@ -25,7 +25,8 @@ var config = {
         //redis数据库配置
     },
     wx:{
-        appId:'wx815629929dadc0fd'
+        appId:'wx815629929dadc0fd',
+        appSecret:'e0ea687f1e32d1669c046fc54d115181'
     }
 };
 

@@ -37,6 +37,7 @@
     "redis": "^3.0.2"
   },
   "devDependencies": {
-    "cross-env": "^7.0.2"
+    "cross-env": "^7.0.2",
+    "request": "^2.88.2"
   }
 }
