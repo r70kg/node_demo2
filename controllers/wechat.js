@@ -120,10 +120,10 @@ class wxController{
                 cache.put('access_token', data.access_token, expire_time)
                 cache.put('openId', data.openid, expire_time)
 
-                ctx.cookies.set(
+                /* ctx.cookies.set(
                   'openId',
                   data.openid
-                )
+                ) */
                 /* ctx.cookie('openId', data.openid, {
                   maxAge: expire_time,
                 }) //存储openId */
